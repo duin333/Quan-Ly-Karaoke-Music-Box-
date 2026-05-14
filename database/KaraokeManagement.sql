@@ -371,6 +371,20 @@ SET SQL_SAFE_UPDATES = 1;
 SELECT MaHD, MaPhong, TongTien FROM HoaDon WHERE DATE(GioKetThuc) = '2026-05-11';
 
 
+ALTER TABLE LichSuHoTro MODIFY COLUMN MaNV INT;
+ALTER TABLE LichSuHoTro ADD CONSTRAINT FK_LichSuHoTro_NhanVien FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV);
+
+
+-- Xóa cột thừa cho đỡ rối code
+ALTER TABLE Phong DROP COLUMN YeuCauHoTro; 
+
+-- Chốt SupportStatus: 0:Bình thường, 1:Khách đang gọi (Chuông reo), 2:Nhân viên đang đến
+ALTER TABLE Phong MODIFY COLUMN SupportStatus INT DEFAULT 0;
+
+
+-- Cập nhật lại chú thích cho dễ nhớ nhen Duyên
+ALTER TABLE YeuCauGoiMon 
+MODIFY COLUMN TrangThai INT DEFAULT 0 COMMENT '0:Chờ duyệt, 1:Bếp làm, 2:Đã giao, 3:Đã thanh toán, 4:Hủy';
 
 
 ALTER TABLE DichVu ADD TrangThaiHienThi INT DEFAULT 1;
